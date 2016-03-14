@@ -1,8 +1,8 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"time"
 )
@@ -11,10 +11,9 @@ func main() {
 	// the first option, using environment variable
 	fmt.Println(os.Getenv("POD"))
 	// the second option, using volume
-	file, err := os.Open("/etc/pod")
+	bytes, err := ioutil.ReadFile("/etc/pod")
 	if err == nil {
-		fmt.Println(bufio.NewScanner(file).Text())
-		file.Close()
+		fmt.Println(string(bytes))
 	}
 	// donot exit the loop
 	for {

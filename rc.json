@@ -1,0 +1,51 @@
+{
+  "apiVersion": "v1",
+  "kind": "ReplicationController",
+  "metadata": {
+    "name": "downward-test"
+  },
+  "spec": {
+    "replicas": 2,
+    "selector": {
+      "app": "downward-test"
+    },
+    "template": {
+      "metadata": {
+        "name": "downward-test",
+        "labels": {
+          "app": "downward-test"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "downward-test",
+            "image": "ecr.vip.ebayc3.com/haibzhou/downward:test",
+            "volumeMounts": [
+              {
+                "name": "pod",
+                "mountPath": "/etc",
+                "readOnly": false
+              }
+            ]
+          }
+        ],
+        "volumes": [
+          {
+            "name": "pod",
+            "downwardAPI": {
+              "items": [
+                {
+                  "path": "pod",
+                  "fieldRef": {
+                    "fieldPath": "metadata.name"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}
