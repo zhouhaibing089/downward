@@ -9,7 +9,7 @@ import (
 
 func main() {
 	// the first option, using environment variable
-	fmt.Println(os.Getenv("POD_NAME"))
+	fmt.Println(os.Getenv("POD"))
 	// the second option, using volume
 	file, err := os.Open("/etc/pod")
 	if err == nil {
